@@ -139,9 +139,8 @@ docker run -p 8000:8000 bedrock-api
 
 ## **Future Improvements**  
 
-- Implement a `/status/{job_id}` endpoint to check job progress.  
-- Enhance logging for better debugging.  
-- Add authentication to restrict API access.  
+- Implement a `/status/{job_id}` endpoint to check job progress.
+- Currently, this system supports Bedrock Llama 3.3 70B in the us-east-1 region. In the future, it will expand to support multiple models across different AWS regions to enhance flexibility and scalability.
 
 ---
 
