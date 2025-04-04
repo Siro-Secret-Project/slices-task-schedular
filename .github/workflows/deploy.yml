@@ -44,5 +44,5 @@ jobs:
       - name: Build and push FastAPI app
         run: |
           docker build -t fastapi-app .
-          docker tag fastapi-app:latest ${{ secrets.ECR_REPOSITORY_UAT }}/fastapi-app:latest
-          docker push ${{ secrets.ECR_REPOSITORY_UAT }}/fastapi-app:latest
+          docker tag fastapi-app:latest ${{ secrets.ECR_REPOSITORY_UAT }}:latest
+          docker push ${{ secrets.ECR_REPOSITORY_UAT }}:latest
