@@ -29,11 +29,20 @@ jobs:
         run: |
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY_UAT }}
 
-      - name: Build Docker image
+      - name: Build and push Redis image
         run: |
-          docker build -t slices-task-scheduler .
-          docker tag slices-task-scheduler:latest ${{ secrets.ECR_REPOSITORY_UAT }}:latest
+          docker pull redis:6.0.7
+          docker tag redis:6.0.7 ${{ secrets.ECR_REPOSITORY_UAT }}/redis:6.0.7
+          docker push ${{ secrets.ECR_REPOSITORY_UAT }}/redis:6.0.7
 
-      - name: Push Docker image to ECR
+      - name: Build and push RedisInsight image
         run: |
-          docker push ${{ secrets.ECR_REPOSITORY_UAT }}:latest
+          docker pull redislabs/redisinsight:1.14.0
+          docker tag redislabs/redisinsight:1.14.0 ${{ secrets.ECR_REPOSITORY_UAT }}/redisinsight:1.14.0
+          docker push ${{ secrets.ECR_REPOSITORY_UAT }}/redisinsight:1.14.0
+
+      - name: Build and push FastAPI app
+        run: |
+          docker build -t fastapi-app .
+          docker tag fastapi-app:latest ${{ secrets.ECR_REPOSITORY_UAT }}/fastapi-app:latest
+          docker push ${{ secrets.ECR_REPOSITORY_UAT }}/fastapi-app:latest
