@@ -30,6 +30,8 @@ jobs:
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REPOSITORY_UAT }}
 
       - name: Build Docker image
+        env:
+          REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
         run: |
           docker build -t slices-task-scheduler .
           docker tag slices-task-scheduler:latest ${{ secrets.ECR_REPOSITORY_UAT }}:latest
