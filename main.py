@@ -124,3 +124,6 @@ def enqueue_prompt(request: PromptRequest):
 
     return {"success": True, "job_id": job_id, "message": "Prompt added to queue."}
 
+@app.get("/")
+def healthCheck():
+    return {"status": "ok", "message": "Service is healthy"}
