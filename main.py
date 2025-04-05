@@ -8,10 +8,16 @@ import threading
 from aws.aws_bedrock_connection import BedrockLlamaClient
 from database.mongo_db_connection import MongoDBDAO
 from typing import Literal
+from dotenv import load_dotenv
+import os
+
+# Load variables from .env into environment
+load_dotenv()
 
 # Initialize FastAPI, Redis, and Queue
 app = FastAPI()
-redis_conn = Redis(host="redis", port=6379)
+redis_password = os.getenv("REDIS_PASSWORD")
+redis_conn = Redis(host='13.203.74.124', port=6379, password=redis_password)
 task_queue = Queue("bedrock_task_queue", connection=redis_conn)
 
 class PromptRequest(BaseModel):
@@ -19,7 +25,7 @@ class PromptRequest(BaseModel):
     environment: Literal["UAT", "PROD"]
 
 RATE_LIMIT_KEY = "bedrock_requests"
-MAX_REQUESTS = 3
+MAX_REQUESTS = 99
 TIME_WINDOW = 60  # 60 seconds
 PROCESSING_LOCK_KEY = "queue_processing_lock"
 PROCESSING_TTL = 60  # Lock expiry in seconds

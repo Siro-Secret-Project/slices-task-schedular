@@ -34,15 +34,3 @@ jobs:
           docker pull redis:6.0.7
           docker tag redis:6.0.7 ${{ secrets.ECR_REPOSITORY_UAT }}/redis:6.0.7
           docker push ${{ secrets.ECR_REPOSITORY_UAT }}/redis:6.0.7
-
-      - name: Build and push RedisInsight image
-        run: |
-          docker pull redislabs/redisinsight:1.14.0
-          docker tag redislabs/redisinsight:1.14.0 ${{ secrets.ECR_REPOSITORY_UAT }}/redisinsight:1.14.0
-          docker push ${{ secrets.ECR_REPOSITORY_UAT }}/redisinsight:1.14.0
-
-      - name: Build and push FastAPI app
-        run: |
-          docker build -t fastapi-app .
-          docker tag fastapi-app:latest ${{ secrets.ECR_REPOSITORY_UAT }}:latest
-          docker push ${{ secrets.ECR_REPOSITORY_UAT }}:latest
